@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
@@ -43,34 +43,78 @@ export const Login = () => {
     e.preventDefault()
     const {email,password}=user;
    
-    axios.post('http://localhost:8080/login',{email,password})
+    axios.post('https://bazaarcartbackend.vercel.app/login',{email,password})
     .then((res)=>{
-      console.log(res.data.user)
-      if(res.data.msg=='Loggin Success'){
-        localStorage.setItem('username',JSON.stringify(res.data.user))
+
+   
+      if(res.data.msg==='Loggin Success'){
+
+        console.log(res.data.token)
+        //localStorage.setItem('username',JSON.stringify(res.data.user))
+        localStorage.setItem('token',(res.data.token))
+        
         toast.success(res.data.msg)
-        handleLogin(res.data.token)
-       getuserName(res.data.user)
-        setTimeout(()=>{
-          navigate('/')
-        },1000)
-       
+
         
         
+        handleSession()
+ 
       }
       else{
         toast.error(res.data.msg)
       }
     })
     .catch((e)=>{
-      handleLogout()
+     console.log(e)
     })
 
   }
 
-  const checkLogin=()=>{
+
+
+
+
   
+
+
+
+
+  const handleSession=()=>{
+    let token=localStorage.getItem("token")
+    axios.post("https://bazaarcartbackend.vercel.app/sessionRoute",{}, {
+      headers: {
+        authentication:token,
+      },
+    }).then((res) => {
+
+     console.log(res.data)
+
+      if(res.data.isAuth){
+      
+        setTimeout(()=>{
+          handleLogin(token)
+          navigate('/cart')
+          getuserName(res.data.username)
+        },)
+        
+      }
+      else{
+        handleLogout()
+ 
+      }
+
+      
+    
+
+    }).catch((e)=>{
+     console.log(e)
+    });
   }
+
+
+useEffect(()=>{
+handleSession()
+},[]) 
 
 
   return (
@@ -87,7 +131,7 @@ export const Login = () => {
         <input className="w-[250px] outline-none px-3 py-1 placeholder:text-sm rounded-md  " name="password" value={user.password} onChange={handleUser} type={toggle?'text':'password'} placeholder="Enter Password"  />
         </label>
         <Link to={'/signup'} className="ml-[50%] hover:text-blue-600 hover:underline">Create a Account</Link>
-        <input onClick={checkLogin} className="bg-red-500 py-2 px-4 rounded-xl text-white hover:scale-110 transition-all duration-300 cursor-pointer hover:bg-blue-500" type="submit" value="Login" />
+        <input  className="bg-red-500 py-2 px-4 rounded-xl text-white hover:scale-110 transition-all duration-300 cursor-pointer hover:bg-blue-500" type="submit" value="Login" />
       </form>
       <Toaster/>
     </div>

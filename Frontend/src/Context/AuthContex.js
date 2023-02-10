@@ -1,3 +1,4 @@
+
 import { createContext,useState } from "react";
 
 export const AuthContext=createContext()
@@ -8,10 +9,13 @@ export const AuthContextProvider=({children})=>{
         token:null,
     })
 
+
+
+
     const [Name,setName]=useState("")
 
     const handleLogin=(token)=>{
-        console.log(token)
+      
         setAuth({
             ...Auth,
             isAuth:true,
@@ -19,6 +23,7 @@ export const AuthContextProvider=({children})=>{
         })
     }
     const handleLogout=()=>{
+        
         setAuth({
             ...Auth,
             isAuth:false,
@@ -34,7 +39,7 @@ export const AuthContextProvider=({children})=>{
     }
 
     return (
-        <AuthContext.Provider value={{Auth,Name,handleLogin,handleLogout,getuserName}}>
+        <AuthContext.Provider value={{Auth,setAuth ,Name,handleLogin,handleLogout,getuserName}}>
             {children}
         </AuthContext.Provider>
     )

@@ -34,7 +34,7 @@ export const Signup = () => {
   const handleSubmit=(e)=>{
     e.preventDefault()
     const {username,email,password}=user;
-    axios.post('http://localhost:8080/signup',{username,email,password})
+    axios.post('https://bazaarcartbackend.vercel.app/signup',{username,email,password})
     .then((res)=>{
       toast.success('Register Successfully')
       setTimeout(()=>{

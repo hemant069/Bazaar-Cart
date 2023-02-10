@@ -27,6 +27,7 @@ export const Home = () => {
      
      <TopDeals val={MobilesDeals} show={2} />
      <Deals heading={"Mobiles Deals"} all={"View all"}  name={'mobiles'}/>
+     <Deals heading={"Laptops Offers"} all={"View all"} name={'laptop'}/>
 
    
     

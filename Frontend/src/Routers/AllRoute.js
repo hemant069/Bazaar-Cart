@@ -1,6 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router'
 import { DarkMode } from '../Components/DarkMode'
+import { Footer } from '../Components/Footer'
 import { Navbar } from '../Components/Navbar'
 import { Private } from '../Context/Private'
 import { Cart } from '../Pages/Cart'
@@ -24,9 +25,12 @@ export const AllRoute = () => {
             <Route path='/login' element={<Login/>}/>
             <Route path='/products/category/:id'element={<Products/>}/>
             <Route path='/products/category/productsdetails/:id' element={<ProductDetails/>}/>
-            <Route path='/wishlist' element={<Wishlist/>}/>
+            <Route path='/wishlist' element={<Private><Wishlist/></Private>}/>
             <Route path='/cart' element={<Private><Cart/></Private>}/>
         </Routes>
+        <div className='pt-10'>
+          <Footer/>
+        </div>
     </div>
   )
 }

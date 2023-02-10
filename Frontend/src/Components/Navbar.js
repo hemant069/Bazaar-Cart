@@ -45,9 +45,15 @@ export const Navbar = () => {
 
   }
 
-  console.log(Auth)
+
 
   let username=JSON.parse(localStorage.getItem('username'))
+
+  const Logout=()=>{
+    localStorage.removeItem('token')
+    handleLogout()
+    
+  }
 
  
 
@@ -80,9 +86,9 @@ export const Navbar = () => {
        {Auth.isAuth?<div className="flex gap-3 items-center">
         <div className="flex gap-1">
         <AiOutlineUser size={25}/>
-        <p>{username}</p>
+        <p>{Name.username}</p>
         </div>
-        <div className="rounded-sm cursor-pointer hover:bg-violet-100 hover:scale-110" onClick={()=>handleLogout()}>
+        <div className="rounded-sm cursor-pointer hover:bg-violet-100 hover:scale-110" onClick={Logout}>
           <MdLogout size={25}/>
         </div>
        </div>:<button onClick={handleLogin} className="bg-white p-2 cursor-pointer rounded-sm hover:bg-violet-100 hover:scale-110  ">

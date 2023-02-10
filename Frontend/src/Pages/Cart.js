@@ -1,7 +1,5 @@
 import React from "react";
-import { useState } from "react";
 import { useContext } from "react";
-import { MdAdd, MdDelete, MdRemove } from "react-icons/md";
 import { CartAndWishlist } from "../Components/CartAndWishlist";
 import { Checkout } from "../Components/Checkout";
 import { ContextApi } from "../Context/Context";
@@ -20,7 +18,12 @@ let className='flex flex-col md:flex-row place-content-between  '
       className=''
     }
    
+
   
+  
+
+
+ 
 
 
 

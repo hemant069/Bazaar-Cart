@@ -1,17 +1,27 @@
 import { createContext, useEffect, useReducer, useState } from "react";
 import axios from "axios";
 import { initialState, Reducer } from "./Reducer";
+import { useLocation } from 'react-router-dom';
 
 export const ContextApi = createContext();
 
 export const ContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(Reducer, initialState);
 
+  const location=useLocation()
+
+
+  let path=location.pathname.split('/')[2]
+  
+
+ 
+  
+
   const [loading, setLoading] = useState(false);
 
   const handleData = async () => {
     setLoading(false)
-    let res = await axios.get(`http://localhost:8080/products`);
+    let res = await axios.get(`https://bazaarcartbackend.vercel.app/products`);
     setLoading(true)
     let resdata = await res.data;
     dispatch({ type: "getAllData", payload: resdata });
@@ -19,14 +29,18 @@ export const ContextProvider = ({ children }) => {
 
 
   useEffect(()=>{
-    handleData()
-   
-  },[])
+    if(!path){
+      handleData()
+    }
+
+  },[location.pathname])
+
+
  
 
 
   const handleSearch=async(val)=>{
-    let res=await axios.get(`http://localhost:8080/products/search/?q=${val}`)
+    let res=await axios.get(`https://bazaarcartbackend.vercel.app/products/search/?q=${val}`)
     let resdata=await res.data;
     dispatch({type:'search',payload:resdata})
   }
@@ -35,7 +49,7 @@ export const ContextProvider = ({ children }) => {
    if(val){
     setLoading(false);
     let res = await axios.get(
-      `http://localhost:8080/products/category?category=${val}`
+      `https://bazaarcartbackend.vercel.app/products/category?category=${val}`
     );
     setLoading(true);
     let resdata = await res.data;
@@ -57,13 +71,14 @@ export const ContextProvider = ({ children }) => {
   const ProductDetails = async (id) => {
     setLoading(false);
     let res = await axios.get(
-      `http://localhost:8080/products/category/productsdetails/${id}`
+      `https://bazaarcartbackend.vercel.app/products/category/productsdetails/${id}`
     );
     let resdata = await res.data;
     setLoading(true);
     dispatch({ type: "singleProduct", payload: resdata });
   
   };
+
 
 
 

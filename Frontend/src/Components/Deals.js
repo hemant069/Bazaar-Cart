@@ -6,11 +6,14 @@ import { SingleProduct } from './SingleProduct'
 
 
 import "../App.css"
+import useProductNavigate from '../CustomHooks/useProductNavigate'
 
 
 export const Deals = ({name,heading,all}) => {
 
 const {state}=useContext(ContextApi)
+
+const {handleClick}=useProductNavigate()
 
 let newdata=state.data.filter((el)=>el.category==name)
 
@@ -90,7 +93,7 @@ let newdata=state.data.filter((el)=>el.category==name)
     <div>
         <div className='flex justify-between mb-5 mt-10 items-center'>
           <h4 className='font-semibold text-xl mx-2'>{heading}</h4>
-          <button className='mr-3 bg-blue-600 text-white px-3 py-2 rounded-xl hover:bg-red-600 transition-all duration-300 hover:scale-110'>{all}</button>
+          <button onClick={()=>handleClick(name)}  className='mr-3 bg-blue-600 text-white px-3 py-2 rounded-xl hover:bg-red-600 transition-all duration-300 hover:scale-110'>{all}</button>
         </div>
         <Slider {...setting}>
          {newdata[0] && newdata.map((el,i)=><div key={i} className="cursor-pointer" >
